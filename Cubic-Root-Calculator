@@ -1,0 +1,19 @@
+%Cubic Root Calculator
+%Prompts the user for the 4 coefficients of a cubic expression
+%and calculates the three different roots and outputs to screen
+
+%Prompt for input
+a = input('a = ');
+b = input('b = ');
+c = input('c = ');
+d = input('d = ');
+
+%Calculate p and q
+p = (3*a*c-b^2)/(3*a^2);
+q = (2*b^3-9*a*b*c+27*a^2*d)/(27*a^3);
+
+%Print out results
+fprintf('\n\n');
+for c = 0:2
+    fprintf('r%i = %.5f\n', c, 2*sqrt(-p/3)*cos((1/3)*acos((3*q)/(2*p)*sqrt(-3/p))-c*(2*pi)/3)-b/(3*a));
+end
