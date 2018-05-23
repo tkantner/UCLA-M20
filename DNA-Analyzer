@@ -1,0 +1,65 @@
+%DNA Analyzer- Reads through an array representing the bases of DNA and
+%determines the average, max, and min length of complete DNA strands using
+%start and stop codons
+
+%Clear the screen
+clear all;
+clc;
+
+%Load the file
+load('chr1_sect.mat');
+
+%Initialize Variables
+numBases = length(dna);
+storedLengths = zeros(1, ceil(numBases/6));
+numlengths = 0;
+start = 0;
+tga = 0;
+taa = 0;
+tag = 0;
+
+%Iterate through entire array
+for k = 1:3:numBases - 2
+    
+    %Find the start
+    if start == 0 && dna(k) == 1 && dna(k+1) == 4 && dna(k+2) == 3
+        start = k;
+        numlengths = numlengths + 1;  %increase number of strands for avg
+        continue;
+    end
+    
+    %Look for end points
+    if start ~= 0 && dna(k) == 4
+        if dna(k+1) == 1 && dna(k+2) == 1 %TAA
+            length = k - start +3;  %Define length
+            storedLengths(numlengths) = length;
+            start = 0; %Know that were looking for a start again
+            taa = taa +1;
+        elseif dna(k+1) == 1 && dna(k+2) == 3 %TAG
+             length = k - start +3;  %Define length
+            storedLengths(numlengths) = length;
+            start = 0; %Know that were looking for a start again
+            tag = tag + 1;
+        elseif dna(k+1) == 3 && dna(k+2) == 1 %TGA
+            length = k - start +3;  %Define length
+            storedLengths(numlengths) = length;
+            start = 0; %Know that were looking for a start again
+            tga = tga + 1;
+        end
+    end
+end
+
+%Calculate Average Length
+average = mean(storedLengths(1:numlengths));
+
+%Calculate Max
+maxlength = max(storedLengths);
+
+%Calculate min
+minlength = min(storedLengths(1:numlengths));
+
+%Print the values
+fprintf('Total Protein-Coding Segments: %i\n', numlengths);
+fprintf('Average Length: %.2f\n', average);
+fprintf('Maximum Length: %i\n', maxlength);
+fprintf('Minimum Length: %i\n', minlength);
