@@ -1,0 +1,129 @@
+%Lunar Phase Calculator- User inputs a date and gets
+%the percent illumination and if the moon is waxing/waning
+
+%Clear the screen
+clear all;
+clc;
+
+%Prompt for input
+s_Month = input('Please enter the month as MMM (e.g. JAN): ', 's');
+s_Day = input('Please enter the day as DD (e.g. 01): ', 's');
+s_Year = input('Please enter the year as YYYY (e.g. 2000): ', 's');
+
+%Check Validity of day
+if length(s_Day) ~= 2
+    error('Day is not in DD format');
+end
+
+i_Day = str2num(s_Day);
+
+if isempty(i_Day)
+    error('The day must be numeric');
+end
+
+if i_Day < 1 || i_Day > 31
+    error('The day must be valid');
+end
+
+if mod(i_Day, floor(i_Day)) ~= 0
+    error('The day must be an integer');
+end
+
+%Check Validity of year
+if length(s_Year) ~= 4
+    error('Year is not in YYYY format');
+end
+
+i_Year = str2num(s_Year);
+
+if isempty(i_Year) == 1
+    error('The year must be numeric');
+end
+
+if mod(i_Year, floor(i_Year)) ~= 0
+    error('The year must be an integer');
+end
+
+if i_Year < 1900 || i_Year > 9998
+    error('Year is not in the specified range');
+end
+
+%Check validity of month
+
+switch s_Month
+    case 'JAN'
+        i_Month = 1;
+        max_D = 31;
+    case 'FEB'
+        i_Month = 2;
+        if mod(i_Year, 400) == 0 || (mod(i_Year, 4) == 0 && mod(i_Year, 100) ~= 0)
+            max_D = 29;
+        else
+            max_D = 28;
+        end
+    case 'MAR'
+        i_Month = 3;
+        max_D = 31;
+    case 'APR'
+        i_Month = 4;
+        max_D = 30;
+    case 'MAY'
+        i_Month = 5;
+        max_D = 31;
+    case 'JUN'
+        i_Month = 6;
+        max_D = 30;
+    case 'JUL'
+        i_Month = 7;
+        max_D = 31;
+    case 'AUG'
+        i_Month = 8;
+        max_D = 31;
+    case 'SEP'
+        i_Month = 9;
+        max_D = 30;
+    case 'OCT'
+        i_Month = 10;
+        max_D = 31;
+    case 'NOV'
+        i_Month = 11;
+        max_D = 30;
+    case 'DEC'
+        i_Month = 12;
+        max_D = 31;
+    otherwise
+        error('The month is not valid')
+end
+
+%Check date validity
+if i_Day > max_D
+    error('This date does not exist')
+end
+
+%Offset value
+if i_Month == 1 || i_Month == 2
+    a = 1;
+else
+    a = 2;
+end
+
+%Calculate J and delta J
+y = i_Year - a + 4800;
+m = i_Month + 12*a - 3;
+
+J = i_Day + floor((153*m + 2)/5) + 365*y + floor(y/4) - floor(y/100) + floor(y/400) - 32045;
+
+delta_J = J - 2415021;
+
+%Calculate L
+T = 29.530588853;
+L = sin(pi*mod(delta_J, T)/T)^2;
+
+%Print the results
+fprintf('%s %s %s\n', s_Month, s_Day, s_Year);
+fprintf('Illumination = %.1f percent\n', L*100);
+if mod(delta_J, T)/T < 0.5
+    fprintf('Waxing\n');
+else
+    fprintf('Waning\n');
+end
