@@ -1,0 +1,38 @@
+%Three Species Problem-Calculates the final populations
+%Of three species given the ODEs
+
+%Clear the screen
+clear all;
+clc;
+
+%Set the intial values
+x0 = 2;
+y0 = 2.49;
+z0 = 1.5;
+
+%Print the Orginal Values
+  fprintf('Time\t\tX\t\tY\t\tZ\n');
+  fprintf('0.0      \t%.2f\t%.2f\t%.2f\n', x0, y0, z0)
+
+  t = 0;
+  delta_t = .005;
+%Run the loop
+for k = 1:ceil(12/delta_t)
+    t = t+delta_t;
+    %Calculate new values
+    x_new = x0 + delta_t*(.75*x0*(1-x0/20)-1.5*x0*y0-.5*x0*z0);
+    y_new = y0 + delta_t*(y0*(1-y0/25)-.75*x0*y0-1.25*y0*z0);
+    z_new = z0 + delta_t*(1.5*z0*(1-z0/30)-x0*z0-y0*z0);
+    
+    %Change the values
+    x0 = x_new;
+    y0 = y_new;
+    z0 = z_new;
+    
+    %Print the data
+    if mod(k,.5/delta_t) == 0 && t < 10
+        fprintf('%3.1f%13.2f\t%4.2f\t%4.2f\n', t, x0, y0, z0);
+    elseif mod(k,.5/delta_t) == 0 && t >= 10
+        fprintf('%3.1f%12.2f\t%4.2f\t%4.2f\n', t, x0, y0, z0);
+    end
+end
