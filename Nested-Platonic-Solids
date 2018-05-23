@@ -1,0 +1,37 @@
+%Nested Platonic Solids
+%Thomas Kantner 104577846
+%Calculates the inradius, outradius, and edgelength of several
+%nested platonic solids
+
+%Define tetrahedron variables
+T_E = 4 / sqrt(6);
+T_R = 1;
+T_r = sqrt(6)/12*T_E;
+
+%Define cube variables
+C_R = T_r;
+C_E = 2/sqrt(3)*C_R;
+C_r = .5*C_E;
+
+%Define Octahedron variables
+O_R = C_r;
+O_E = 2/sqrt(2)*O_R;
+O_r = sqrt(6)/6*O_E;
+
+%Define Dodecahedron variables
+D_R = O_r;
+D_E = 4/(sqrt(15)+sqrt(3))*D_R;
+D_r = sqrt(250 + 110*sqrt(5))/20*D_E;
+
+%Define Icosahedron variables
+I_R = D_r;
+I_E = 4/sqrt(10+2*sqrt(5))*D_r;
+I_r = sqrt(48+18*sqrt(5))/12*I_E;
+
+%Print the table
+fprintf('Solid\t\t r\t\t\t\t R\t\t\t\t E\n');
+fprintf('T    \t\t %.6f\t\t %.6f\t\t %.6f\n',T_r,T_R,T_E);
+fprintf('C    \t\t %.6f\t\t %.6f\t\t %.6f\n',C_r,C_R,C_E);
+fprintf('O    \t\t %.6f\t\t %.6f\t\t %.6f\n',O_r,O_R,O_E);
+fprintf('D    \t\t %.6f\t\t %.6f\t\t %.6f\n',D_r,D_R,D_E);
+fprintf('I    \t\t %.6f\t\t %.6f\t\t %.6f\n',I_r,I_R,I_E);
