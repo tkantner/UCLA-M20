@@ -1,0 +1,54 @@
+%Nested Radicals- Prompts for an input of an integer and
+%calculates the terms of a series
+
+%Clear screen
+clear all;
+clc;
+
+valid = 1;
+
+while valid == 1
+    %Prompt for input
+    m = input('What is the value of m? ');
+    
+    %Check validity of input
+    if m <= 1 || mod(m,1) ~= 0
+        fprintf('Error! m is not valid\n')
+        valid = 0;
+    end
+    
+   if valid == 1
+   %Calculate t1 and t2
+   t1= sqrt(m);
+   t2 = sqrt(m-sqrt(m));
+   
+   told = t1;
+   tnew = t2;
+   count = 3;
+   
+   %Print m and the first two
+   fprintf('m = %i\n', m);
+   fprintf('t1 = %.12f\n', t1);
+   fprintf('t2 = %.12f\n', t2);
+   
+   
+       
+   while abs(tnew - told) > 1e-12 && count < 101
+       %To check the previous term
+       told = tnew;
+       
+    if mod(count, 2)== 0 %even
+        t2 = sqrt(m-sqrt(m+t2));
+        fprintf('t%i = %.12f\n', count,t2);
+        tnew = t2;
+    else %odd
+        t1 = sqrt(m-sqrt(m+t1));
+        fprintf('t%i = %.12f\n',count, t1);
+        tnew = t1;
+    end
+        
+        count = count + 1;
+   end
+   end
+        
+end
