@@ -1,0 +1,29 @@
+%Ellipse Perimeter Approximations
+%Takes input from the user for the semiaxes and calculates
+%8 different approximations and outputs to screen
+
+% Prompt for input
+a = input('What is the value of a? ');
+b = input('What is the value of b? ');
+
+%Calculate the different approximations + h
+h = ((a-b)/(a+b))^2;
+p1 = pi*(a+b);
+p2 = pi*sqrt(2*(a^2 + b^2));
+p3 = pi*sqrt(2*(a^2 + b^2)-(a-b)^2/2);
+p4 = pi*(a+b)*(1+h/8)^2;
+p5 = pi*(a+b)*(1+(3*h)/(10+sqrt(4-3*h)));
+p6 = pi*(a+b)*(64-3*h^2)/(64-16*h);
+p7 = pi*(a+b)*(256-48*h-21*h^2)/(256-112*h+3*h^2);
+p8 = pi*(a+b)*(3-sqrt(1-h))/2;
+
+%Print out the results
+fprintf('\nP1 = %.10f\n', p1);
+fprintf('P2 = %.10f\n', p2);
+fprintf('P3 = %.10f\n', p3);
+fprintf('P4 = %.10f\n', p4);
+fprintf('P5 = %.10f\n', p5);
+fprintf('P6 = %.10f\n', p6);
+fprintf('P7 = %.10f\n', p7);
+fprintf('P8 = %.10f\n', p8);
+fprintf('h = %.10f\n', h);
