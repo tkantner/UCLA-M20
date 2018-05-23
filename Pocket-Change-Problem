@@ -1,0 +1,47 @@
+%Pocket Change Problem- Determines the average number of coins needed for a
+%specific range
+
+%Clear the screen
+clear all;
+clc;
+
+%Total Counts
+num_coins = 0;
+it_count = 0;
+
+%Iterate through the whole set
+for k = 0:99
+    
+    i = k;
+    
+    %Quarters
+    while i >= 25
+        i = i - 25;
+        num_coins = num_coins + 1;
+    end
+    
+    %Dimes
+    while i >= 10
+        i = i - 10;
+        num_coins = num_coins + 1;
+    end
+    
+    %Nickels
+    while i >= 5
+        i = i -5;
+        num_coins = num_coins + 1;
+    end
+    
+    %Pennies
+    while i > 0
+      i = i - 1;
+       num_coins = num_coins + 1;
+    end
+
+    %Increment iteration count
+    it_count = it_count + 1;
+    
+end
+
+%Output the answer
+fprintf('Average Number of Coins = %.2f\n', num_coins/it_count);
